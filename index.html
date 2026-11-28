@@ -343,6 +343,15 @@
 <script>
 (() => {
   // ---- Download link: paste the Chrome Web Store URL here once the listing is live. ----
+  // Creator links: purchaseguard.github.io/?ref=CODE saves the code for 14 days; the extension
+  // reads it after install and turns the 7-day trial into 30 days.
+  const refCode = (new URLSearchParams(location.search).get('ref') || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 32);
+  if (refCode) { try { localStorage.setItem('pg_ref', JSON.stringify({ code: refCode, at: Date.now() })); } catch (e) {} }
+  let hasRef = !!refCode;
+  try { const r = JSON.parse(localStorage.getItem('pg_ref') || 'null'); if (r && Date.now() - r.at < 14 * 864e5) hasRef = true; } catch (e) {}
+  if (hasRef) {
+    document.querySelectorAll('.price-note').forEach((n) => (n.textContent = 'Your link gives you 1 month free, then $9.99 once. No subscription.'));
+  }
   // Seasonal line above the headline: shows through Cyber Monday (Dec 1, 2026), then hides itself.
   if (Date.now() < Date.parse('2026-12-02T08:00:00Z')) document.getElementById('deal').hidden = false;
   const STORE_URL = 'https://chromewebstore.google.com/detail/purchaseguard-pause-befor/hbokjajfgpclaidaplncknjdekifjhai';

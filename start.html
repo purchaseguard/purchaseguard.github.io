@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>PurchaseGuard is on</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #030507; color: #e8eef5; font: 17px/1.5 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-align: center; padding: 16px; }
+  h1 { font: 700 40px/1.1 "Avenir Next", system-ui, sans-serif; margin: 0 0 12px; }
+  p { color: #8a96a5; margin: 0; }
+  .drop { width: 14px; height: 14px; margin: 0 auto 24px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #9fc8ee; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .35; } }
+  a { color: #9fc8ee; }
+</style>
+</head>
+<body>
+  <main>
+    <div class="drop" aria-hidden="true"></div>
+    <h1>PurchaseGuard is on.</h1>
+    <p id="msg">Opening your welcome page…</p>
+  </main>
+  <script>
+    // The extension's content script reads any saved creator code here, then swaps this tab for its welcome page.
+    document.addEventListener('purchaseguard:ref', (e) => {
+      document.getElementById('msg').textContent = 'Your creator link worked: ' + e.detail.days + ' days free.';
+    });
+    setTimeout(() => {
+      if (document.documentElement.dataset.purchaseguard !== 'installed') {
+        document.getElementById('msg').innerHTML = 'PurchaseGuard isn’t installed in this browser yet. <a href="./">Get it here</a>.';
+      }
+    }, 4000);
+  </script>
+</body>
+</html>
