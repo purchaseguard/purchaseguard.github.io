@@ -4,7 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Cpath d=%27M16 2C16 2 5 14 5 21a11 11 0 0 0 22 0C27 14 16 2 16 2z%27 fill=%27%239fc8ee%27/%3E%3C/svg%3E">
-<meta property="og:title" content="PurchaseGuard">
+<meta property="og:title" content="PurchaseGuard: pause before you buy">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://purchaseguard.github.io/">
+<meta property="og:image" content="https://purchaseguard.github.io/og.png">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="560">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://purchaseguard.github.io/og.png">
+<link rel="canonical" href="https://purchaseguard.github.io/">
 <meta property="og:description" content="Pause before you buy. A browser extension that keeps your money where it is.">
 <title>PurchaseGuard</title>
 <meta name="description" content="PurchaseGuard pauses checkout pages so you can think before you buy. Keep your money, stay out of credit card debt.">
@@ -107,6 +115,8 @@
 
   /* ---------- hero ---------- */
   .hero { padding-top: 40px; }
+  [hidden] { display: none !important; }
+  .hero .deal { display: inline-block; margin-bottom: 22px; font: 500 13px var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--ember); border: 1px solid rgba(232,162,106,.35); border-radius: 999px; padding: 7px 14px; }
   .hero h1 { font-size: clamp(54px, 11vw, 128px); max-width: 10ch; }
   .hero h1 em { font-style: normal; background: linear-gradient(180deg, #ffffff 10%, var(--water) 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .hero .lead { margin-top: 28px; max-width: 34em; font-size: clamp(18px, 2.2vw, 21px); color: var(--muted); }
@@ -218,6 +228,7 @@
 
   <header class="panel hero" id="top">
     <div class="wrap rise">
+      <p class="deal" id="deal" hidden>Shopping Cyber Monday? Install it first.</p>
       <h1>Pause before <em>you&nbsp;buy.</em></h1>
       <p class="lead">PurchaseGuard is a browser extension that steps in front of checkout pages and "Buy now" buttons. You see the price in <b>hours of your work</b>, you can <b>wait a day</b> instead, and every purchase you skip is <b>counted as money saved.</b></p>
       <div class="cta-row">
@@ -332,6 +343,8 @@
 <script>
 (() => {
   // ---- Download link: paste the Chrome Web Store URL here once the listing is live. ----
+  // Seasonal line above the headline: shows through Cyber Monday (Dec 1, 2026), then hides itself.
+  if (Date.now() < Date.parse('2026-12-02T08:00:00Z')) document.getElementById('deal').hidden = false;
   const STORE_URL = 'https://chromewebstore.google.com/detail/purchaseguard-pause-befor/hbokjajfgpclaidaplncknjdekifjhai';
 
   document.querySelectorAll('.store-link').forEach((a) => {
